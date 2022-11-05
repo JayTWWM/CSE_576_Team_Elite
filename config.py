@@ -19,14 +19,14 @@ parser.add_argument('--temperature_anneal_max', type=float, default=1.0)
 parser.add_argument('--temperature_anneal_bias', type=int, default=6000)
 parser.add_argument('--temperature_start_step', type=int, default=19000)
 
-parser.add_argument('--use_bert', type=bool, default=True)
+parser.add_argument('--use_bert', type=bool, default=False)
 
 parser.add_argument('--lambda_n', type=float, default=1)
 parser.add_argument('--lambda_embed', type=float, default=10)
 
 parser.add_argument('--max_nll', type=float, default=100000)
 
-parser.add_argument('--stage_1_num_epochs', type=int, default=50)
+parser.add_argument('--stage_1_num_epochs', type=int, default=500)
 parser.add_argument('--stage_1_num_steps', type=int, default=15000)
 parser.add_argument('--stage_1_display_step', type=int, default=50)
 
@@ -42,7 +42,7 @@ parser.add_argument('--model_path', type=str, default="./saved_erae_model/")
 
 parser.add_argument('--epsilon', type=float, default=5)
 parser.add_argument('--delta', type=float, default=0.5)
-parser.add_argument('--mode', type=int, default=0)
+parser.add_argument('--mode', type=int, default=1)
 
 args = parser.parse_args()
 

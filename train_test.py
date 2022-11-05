@@ -110,7 +110,7 @@ def evaluate(sample_sent):
 
 if __name__ == '__main__':
     epsilons = [0, 10, 5, 3, 1, 0.9, 0.5, 0.1]
-    sample_sent = "Markdown allows you to use backslash escapes to generate literal characters."
+    sample_sent = "This is an awesome movie. i was very impressed with it. i was glad to see the original cast back in this film. well it would not of been a underworld movie without kate beckinsale. i liked the fact that now the lycans and vampires have a new enemy, humans. now the vampires have to fight humans and lycans and vice versu. i can't wait untile they make number 5."
     if args.mode == 0:
         main_base()
     else:

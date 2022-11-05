@@ -43,9 +43,9 @@
 
 # voc = Vocabulary("test")
 
-# corpus = ['This is the first sentence.',
-#           'This is the second.',
-#           'There is no sentence in this corpus longer than this one.',
+# corpus = ['This is the first sentence....',
+#           'This is the second!!!',
+#           'There is no sentence in this corpus longer than this (one).',
 #           'My dog is named Patrick.']
 # print(corpus)
 
@@ -57,3 +57,14 @@
 
 # for word in range(voc.num_words):
 #     print(voc.to_word(word))
+# import nltk
+# nltk.download('punkt')
+# f=open('./dataset/yelp/yelp1.txt','rU',encoding='utf-8')
+# raw=f.read()
+# tokens = nltk.word_tokenize(raw)
+# text = nltk.Text(tokens)
+# print(tokens)
+from nltk.tokenize import RegexpTokenizer
+
+tokenizer = RegexpTokenizer(r'\w+')
+print(tokenizer.tokenize('Eighty-seven miles to go, go yet.  Onward!'))

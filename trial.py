@@ -3,34 +3,45 @@ import json
 import os
 import numpy as np
 import pandas as pd
-# from tqdm import tqdm
+from collections import defaultdict
+from nltk.tokenize import RegexpTokenizer
+df = pd.read_csv('./dataset/train.csv')
+works = defaultdict(str)
+for ind in df.index:
+    works[df['author'][ind]] += df['review'][ind].replace('\n',' ')
+# print(works['A11OTLEDSW8ZXD'])
 
-data,ctr = {'stars': [], 'text': []},1
+tokenizer = RegexpTokenizer(r'\w+')
+data,ctr = {'text': []},1
 f1 = open('./dataset/yelp/yelp.txt','w',encoding='utf-8')
-with open('./dataset/yelp_academic_dataset_review.json',encoding='utf-8') as f:
-    tr = f.readline()
-    while tr:
-        review = json.loads(tr)
-        # data['stars'].append(review['stars'])
-        # data['text'].append(review['text'])
-        # while ctr<10:
-        # print(str(ctr)+' '+str(review['stars'])+' '+review['text'])
-        f1.write(str(ctr)+' '+str(review['stars'])+' '+review['text'].replace('\n',' ')+'\n')
-        ctr+=1
-        tr = f.readline()
-    
+f2 = open('./dataset/yelp/id2w.txt','w',encoding='utf-8')
+lt,st = defaultdict(int),set()
+for a in works:
+    for a1 in tokenizer.tokenize(works[a]):
+        lt[a1]+=1
+    f1.write(str(ctr)+' '+works[a]+'\n')
+    ctr+=1
+    if ctr==10000:
+        break
+# with open('./dataset/yelp_academic_dataset_review.json',encoding='utf-8') as f:
+#     tr = f.readline()
+#     while tr:
+#         if ctr==10000:
+#             break
+#         review = json.loads(tr)
+#         review['text'] = review['text'].replace('\n',' ').replace(chr(13),' ')
+#         f1.write(str(ctr)+' '+str(review['stars'])+' '+review['text']+'\n')
+        # for a in tokenizer.tokenize(review['text']):
+        #     lt[a]+=1
+#         ctr+=1
+#         tr = f.readline()
+ptr = sorted(lt.keys(),key = lambda x:-lt[x])
+# print(ptr)
+inder,my_dct = 0,{}
+for a in ptr:
+    f2.write(a+'\n')
+    my_dct[a] = inder
+    inder+=1
+with open("my_dict.json", "w") as outfile:
+    json.dump(my_dct, outfile)
 print('Done!')
-# df = pd.DataFrame(data)
-
-# print(df.shape)
-# df.head()
-# df['stars'] = df['stars'].astype('category')
-# df['text'] = df['text'].astype(str)
-# df.to_csv('yelp_reviews.csv', index=False)
-# import tensorflow as tf
-# table = tf.contrib.lookup.index_to_string_table_from_file(vocabulary_file="dataset\yelp\id2w.txt")
-# a = table.lookup(tf.constant([1, 100], tf.int64))
-# values = table.lookup(tf.constant([1, 5], tf.int64))
-# # tf.tables_initializer().run()
-
-# print(values)

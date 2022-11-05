@@ -102,7 +102,11 @@ class DataLoader(BaseDataLoader):
         content = []
         score = []
         with open(self.file_path, 'r', encoding="utf8", errors='ignore') as f:
+            # tr = 0
             for line in f:
+                # if tr==1000000:
+                #     break
+                # tr+=1
                 # print(line)
                 per_line = line.split(" ", self.num_split)
                 if len(line) < 5:
