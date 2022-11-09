@@ -171,7 +171,6 @@ def legomena(data):
 
 def functionWordsFreq(data):
 
-    # fun_path = 'C:/Users/sshar244/Desktop/codes/avengers_ensemble/classifier/functionWord.txt'
     fun_path = '../classifier/functionWord.txt'
     fun_words = open(fun_path, "r").readlines()
     fun_words = [i.strip("\n") for i in fun_words]
@@ -199,7 +198,6 @@ def PuncCharFrequency(data):
     inputText = str(data).lower()
     in_p = inputText.lower().replace(" ", "")
 
-    # p_path = 'C:/Users/sshar244/Desktop/codes/avengers_ensemble/classifier/punctuation.txt'
     p_path = '../classifier/punctuation.txt'
     p_words = open(p_path, "r").readlines()
     p_words = [i.strip("\n") for i in p_words]
