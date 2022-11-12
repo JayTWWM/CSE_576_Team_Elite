@@ -2,12 +2,15 @@
 This script contains the additional fuctions necessary to impleement ensemble architecture.
 
 '''
-from socket import INADDR_ALLHOSTS_GROUP, NETLINK_CRYPTO
 from keras_preprocessing import text
 import numpy as np
 import re
 import nltk
 import spacy
+
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).parents[1]
 
 def totalWords(data):
     # Calculating total words in input.
@@ -108,9 +111,12 @@ def digitsCount(data):
     for d in digit:
         digitsCount[str(d)] = digitsintext.count(str(d))
     
-    dig = np.array(digitsCount.values())
-    
-    return np.divide(dig, characterCount(data))
+    # dig = np.array(digitsCount.values())
+    total = characterCount(data)
+    dig = [value/total for key, value in digitsCount.items()]
+    # return np.divide(dig, characterCount(data))
+    return dig
+    # return np.divide(dig, characterCount(data))
 
 def mcLetterBigram(data):
     # Calculate the counts of bigrams and return frequency of bigrams
@@ -157,7 +163,7 @@ def mcLettersTrigram(data):
 
 def legomena(data):
     input = text.text_to_word_sequence(data, filters=",.?!\"'`;:-()&$", lower=True, split=" ")
-    word_freq = nltk.FreqDist(word for word in input.split())
+    word_freq = nltk.FreqDist(word for word in input)
     h = [key for key, value in word_freq.items() if value == 1]
     d = [key for key, value in word_freq.items() if value == 2]
     try:
@@ -167,7 +173,8 @@ def legomena(data):
 
 def functionWordsFreq(data):
 
-    fun_path = 'C:/Users/sshar244/Desktop/codes/avengers_ensemble/classifier/functionWord.txt'
+
+    fun_path = str(PROJECT_ROOT) + '/classifier/functionWord.txt'
     fun_words = open(fun_path, "r").readlines()
     fun_words = [i.strip("\n") for i in fun_words]
 
@@ -194,7 +201,7 @@ def PuncCharFrequency(data):
     inputText = str(data).lower()
     in_p = inputText.lower().replace(" ", "")
 
-    p_path = 'C:/Users/sshar244/Desktop/codes/avengers_ensemble/classifier/punctuation.txt'
+    p_path = str(PROJECT_ROOT) + '/classifier/punctuation.txt'
     p_words = open(p_path, "r").readlines()
     p_words = [i.strip("\n") for i in p_words]
 
@@ -241,3 +248,5 @@ def getFeatures(input):
     calFeatures(features, labels, postagFreq(input), 'PosTag Frequency')
     # 11
     calFeatures(features, labels, PuncCharFrequency(input), 'PunctuationCharactersFrequency')
+
+    return features

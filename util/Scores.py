@@ -9,7 +9,7 @@ class Scores:
         self.documentText = ''      # contains text withour space character
         self.words = []             # contains words in text
         self.docAuthor = 0          # author of document
-        self.docAuthorProb = 0      # Probability of document author
+        self.docAuthorProb = {}      # Probability of document author
 
         self.availableReplacement = []  
 
@@ -24,7 +24,6 @@ class Scores:
         index = 0
 
         for d in data_:
-
             self.words.append(str(d.text))
             self.inTextTrailingSpaceWords[index] = (str(d.text_with_ws), str(d.pos_))
             self.documentText+=str(d.text_with_ws)
