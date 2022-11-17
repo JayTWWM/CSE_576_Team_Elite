@@ -1,6 +1,7 @@
 from meteor.meteor.meteor import Meteor
 import random
 import copy
+import numpy as np
 import math
 from util.Scores import Scores
 import spacy
@@ -32,7 +33,7 @@ class MutantX:
 
         self.meteor = Meteor()
 
-    def Fitness(self, originalText, updatedText):
+    def Fitness(self, originalText, updatedText, classes):
 
         # checking the total length of text 
         if len(originalText.documentText.split()) < 3000:
@@ -46,7 +47,11 @@ class MutantX:
         
 
         upTextAuthor = updatedText.docAuthor
-        updatedTextProb = updatedText.docAuthorProb[upTextAuthor]
+        # print(upTextAuthor)
+        # ind = np.where(classes == upTextAuthor)[0][0]
+        ind = classes.index(upTextAuthor)
+        # print(ind)
+        updatedTextProb = updatedText.docAuthorProb[ind]
         totalReplace = len(updatedText.wordReplacementsDict)
 
         # calculating fitness score of updated text 

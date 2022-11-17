@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     print("Starting Training")
     ensemble.fit(X_train, y_train)
-
+    
     if not os.path.exists("../trainedModels/amazonData" + "/" ):
         os.makedirs("../trainedModels/amazonData" + "/")
 

@@ -11,6 +11,7 @@ import copy
 import gensim.models.keyedvectors as w2v
 from pathlib import Path
 from MutantX import MutantX
+import numpy as np
 from tqdm import tqdm
 from pathlib import Path
 # import testing
@@ -60,10 +61,11 @@ if __name__ == '__main__':
 
     model = Classifier(authorID, runs)
     model.load_Classifier()
+    classes = model.callClasses().tolist()
 
     text_scores = Scores(ubText)    
     neighbours = GetNeighbours(text_scores.words, nNeighbours)
-    
+
     model.get_label_and_probabilities(text_scores)
     # loading pre trained classifier
     
@@ -127,7 +129,7 @@ if __name__ == '__main__':
 
         for doc in allDocs:
 
-            meteor, fitnessScore, probability, totalReplace, changedDocAuthor = mutantX.Fitness(text_scores, doc)
+            meteor, fitnessScore, probability, totalReplace, changedDocAuthor = mutantX.Fitness(text_scores, doc, classes)
             
             print("METEOR SCORE-", meteor)
             print("Fitness Score-", fitnessScore)
@@ -147,8 +149,9 @@ if __name__ == '__main__':
 
         for topDocument in allDocs:
             # print("author-",originalDocument.documentAuthor)
+            ind = classes.index(text_scores.docAuthor)
             print('CURRENT PROBABILITY : ',
-                  topDocument.docAuthorProb[text_scores.docAuthor])
+                  topDocument.docAuthorProb[ind])
 
 
 

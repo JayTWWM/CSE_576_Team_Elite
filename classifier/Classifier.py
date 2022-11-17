@@ -49,13 +49,17 @@ class Classifier:
         # features = np.asarray(FC.getFeatures(inputText))
         # prediction probability
         prediction_prob = list(self.classifier.predict_proba(features)[0])
-
+        # prediction_prob is just a list
+        # print("Prediction_prob")
+        # print(prediction_prob)
         # author probabilities and final prediction
+        clsases = self.classifier.classes_
         inputText.docAuthorProb = {key:value for (key, value) in enumerate(prediction_prob)}
-        print(inputText.docAuthorProb)
+        # print(inputText.docAuthorProb)
         inputText.docAuthor = self.classifier.predict(features)[0] 
 
         os.remove(str(self.index) + "temp_text")
 
-
+    def callClasses(self):
+        return self.classifier.classes_
     
